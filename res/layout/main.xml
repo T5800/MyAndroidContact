@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <LinearLayout
+        android:id="@+id/main_LinearLayoutForListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <ListView
+                android:id="@+id/main_ListView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_LinearLayoutForSearch"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_above="@id/main_GridView"
+        >
+        <EditText
+                android:id="@+id/main_SearchText"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:text="Entry the name or phone"
+        />
+    </LinearLayout>
+
+    <GridView
+            android:id="@+id/main_GridView"
+            android:layout_height="30sp"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            />
+</LinearLayout>
+

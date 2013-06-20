@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <LinearLayout
+            android:layout_height="50px"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            >
+        <ImageButton
+                android:id="@+id/TouXiangForAddNew"
+                android:layout_width="60px"
+                android:layout_height="50px"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_launcher"
+                />
+        <EditText
+                android:id="@+id/nameForAddNew"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:layout_toRightOf="@id/TouXiangForAddNew"
+                android:hint="input name"
+                />
+    </LinearLayout>
+    <LinearLayout
+            android:layout_height="50px"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="15px"
+                android:text="mobile:"
+                />
+        <EditText
+                android:id="@+id/MobileForAddNew"
+                android:layout_height="35px"
+                android:layout_width="fill_parent"
+                android:hint="input mobile number"
+                />
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_height="50px"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="15px"
+                android:text="E-mail:"
+                />
+        <EditText
+                android:id="@+id/EmailForAddNew"
+                android:layout_height="35px"
+                android:layout_width="fill_parent"
+                android:hint="input E-mail"
+                />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/LinearLayoutBottomForAddNew"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            >
+        <Button
+                android:id="@+id/SaveForAddNew"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Save"
+                android:layout_weight="1"
+            >
+
+        </Button>
+        <Button
+                android:id="@+id/SaveForAddNew"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Return"
+                android:layout_weight="1"
+            >
+
+        </Button>
+
+    </LinearLayout>
+
+</LinearLayout>
