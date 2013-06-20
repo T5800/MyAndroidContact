@@ -1,6 +1,7 @@
 package com.example.MyAndroidContact;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -69,9 +70,30 @@ public class Main extends Activity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     switch (position) {
                         case 0:
+                            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
+                                bottomMenuGrid.setVisibility(View.GONE);
+                            }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(Main.this);
+                            builder.setTitle("add is being clicked!");
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            break;
                         case 1:
+
+
                         case 2:
-                        case 3:
+                            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
+                                bottomMenuGrid.setVisibility(View.GONE);
+                            }
+
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main.this);
+                            builder1.setIcon(R.drawable.ic_launcher);
+                            builder1.setTitle("delete is clicked!");
+                            AlertDialog dialog1 = builder1.create();
+                            dialog1.show();
+                            break;
+                        case 3:finish();break;
                     }
                 }
             });
