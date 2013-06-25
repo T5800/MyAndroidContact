@@ -1,15 +1,13 @@
 package com.example.MyAndroidContact;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +16,10 @@ public class Main extends Activity {
 
     ListView lv;
     GridView bottomMenuGrid;
+    LinearLayout mainSearchLayout;
+    EditText searchText;
+    SimpleAdapter adapter;
+    ArrayList list = new ArrayList(10);
 
     String[] bottom_menu_name = {"add", "search", "delete", "back"};
     int[] bottom_menu_src = {
@@ -35,6 +37,41 @@ public class Main extends Activity {
 
         lv = (ListView)findViewById(R.id.main_ListView);
 
+        if (list.size() == 0) {
+            setTitle("no data!");
+        }
+        lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("用户被点击");
+                Intent intent = new Intent(Main.this, UserDetail.class);
+                System.out.println("intent装配完毕");
+                intent.putExtra("id", position);
+                startActivityForResult(intent, position);
+                System.out.println("id发送出去");
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);    //To change body of overridden methods use File | Settings | File Templates.
+
+        if (resultCode == 3) {
+            list = DBHelper.getAllUsers();
+            adapter = new SimpleAdapter(
+                    this, list, R.layout.listitem,
+                    new String[]{"imageid", "name", "mobile"},
+                    new int[]{R.id.ListViewImage, R.id.ListViewName, R.id.ListViewMobile}
+            );
+
+        }
+        lv.setAdapter(adapter);
+
+        if (resultCode == 3)
+            lv.setSelection(list.size());
     }
 
     @Override
@@ -42,11 +79,13 @@ public class Main extends Activity {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             loadBottomMenu();
 
-            if (bottomMenuGrid.getVisibility() == View.GONE) {
-                bottomMenuGrid.setVisibility(View.VISIBLE);
+            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
+                if (mainSearchLayout != null && mainSearchLayout.getVisibility() == View.VISIBLE)
+                    mainSearchLayout.setVisibility(View.GONE);
+                bottomMenuGrid.setVisibility(View.GONE);
             }
             else {
-                bottomMenuGrid.setVisibility(View.GONE);
+                bottomMenuGrid.setVisibility(View.VISIBLE);
             }
         }
         return super.onKeyDown(keyCode, event);    //To change body of overridden methods use File | Settings | File Templates.
@@ -65,43 +104,86 @@ public class Main extends Activity {
             /**
              * 此时，bottomMenuGrid建立完毕...下面安装监听器..
              */
-            bottomMenuGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
+            bottomMenuGrid.setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     switch (position) {
                         case 0:
                             if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
                                 bottomMenuGrid.setVisibility(View.GONE);
                             }
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(Main.this);
-                            builder.setTitle("add is being clicked!");
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
+//                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main.this);
+//                            builder1.setIcon(R.drawable.ic_launcher);
+//                            builder1.setTitle("add is clicked!");
+//                            AlertDialog dialog1 = builder1.create();
+//                            dialog1.show();
+                            System.out.println("show 完毕");
+                            Intent intent = new Intent(Main.this, AddNew.class);
+                            System.out.println("intent整合完毕");
+                            startActivityForResult(intent, 3);
+                            System.out.println("发送出去");
                             break;
                         case 1:
+                            loadSearchLayout();
 
-
-                        case 2:
-                            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
-                                bottomMenuGrid.setVisibility(View.GONE);
+                            if (mainSearchLayout.getVisibility() == View.GONE) {
+                                mainSearchLayout.setVisibility(View.VISIBLE);
                             }
-
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main.this);
-                            builder1.setIcon(R.drawable.ic_launcher);
-                            builder1.setTitle("delete is clicked!");
-                            AlertDialog dialog1 = builder1.create();
-                            dialog1.show();
+                            else {
+                                mainSearchLayout.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 2:
+//                            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
+//                                bottomMenuGrid.setVisibility(View.GONE);
+//                            }
+//
+//                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main.this);
+//                            builder1.setIcon(R.drawable.ic_launcher);
+//                            builder1.setTitle("delete is clicked!");
+//                            AlertDialog dialog1 = builder1.create();
+//                            dialog1.show();
                             break;
                         case 3:finish();break;
                     }
                 }
             });
-
-
         }
         //To change body of created methods use File | Settings | File Templates.
     }
+
+    private void loadSearchLayout() {
+        mainSearchLayout = (LinearLayout)findViewById(R.id.main_LinearLayoutForSearch);
+        searchText = (EditText)findViewById(R.id.main_SearchText);
+        /**
+         * 下面添加监听器，搜索框输入关键字，实时去DB中查找...
+         */
+        searchText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String needSearch = searchText.getText().toString();
+
+                list = DBHelper.getUsers(needSearch);
+
+                adapter = new SimpleAdapter(
+                        Main.this, list, R.layout.listitem,
+                        new String[]{"imageid", "name", "mobile"},
+                        new int[]{R.id.ListViewImage, R.id.ListViewName, R.id.ListViewMobile}
+                );
+
+                lv.setAdapter(adapter);
+
+                if (list.size() == 0) {
+                    setTitle("no data found");
+                }
+                else {
+                    setTitle("total: " + list.size());
+                }
+                return false;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+        //To change body of created methods use File | Settings | File Templates.
+    }
+
     private SimpleAdapter getAdapter(String[] bottom_menu_name, int[] bottom_menu_src) {
         ArrayList<HashMap<String, Object>> datalist = new ArrayList<HashMap<String, Object>>();
         for (int i = 0 ; i < bottom_menu_name.length; i ++) {
@@ -112,7 +194,7 @@ public class Main extends Activity {
         }
 
         SimpleAdapter adapter = new SimpleAdapter(
-                this, datalist, R.layout.menuItem,
+                this, datalist, R.layout.menuitem,
                 new String[] {"ItemImage", "ItemText"}, new int[] {R.id.ItemImage, R.id.ItemText}
         );
         return adapter;

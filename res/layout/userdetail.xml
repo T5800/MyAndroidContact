@@ -10,7 +10,7 @@
             android:orientation="horizontal"
             >
         <ImageButton
-                android:id="@+id/TouXiangForAddNew"
+                android:id="@+id/UserDetailImage"
                 android:layout_width="60px"
                 android:layout_height="50px"
                 android:layout_alignParentTop="true"
@@ -18,11 +18,11 @@
                 android:src="@drawable/ic_launcher"
                 />
         <EditText
-                android:id="@+id/nameForAddNew"
+                android:id="@+id/UserDetailName"
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
                 android:layout_toRightOf="@id/TouXiangForAddNew"
-                android:hint="input name"
+                android:hint="name"
                 />
     </LinearLayout>
     <LinearLayout
@@ -36,10 +36,10 @@
                 android:text="mobile:"
                 />
         <EditText
-                android:id="@+id/MobileForAddNew"
+                android:id="@+id/UserDetailMobile"
                 android:layout_height="35px"
                 android:layout_width="fill_parent"
-                android:hint="input mobile number"
+                android:hint="mobile number"
                 />
 
     </LinearLayout>
@@ -54,31 +54,41 @@
                 android:text="E-mail:"
                 />
         <EditText
-                android:id="@+id/EmailForAddNew"
+                android:id="@+id/UserDetailEmail"
                 android:layout_height="35px"
                 android:layout_width="fill_parent"
-                android:hint="input E-mail"
+                android:hint="E-mail"
                 />
 
     </LinearLayout>
 
     <LinearLayout
-            android:id="@+id/LinearLayoutBottomForAddNew"
+            android:id="@+id/LinearLayoutBottomForUserDetail"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:orientation="horizontal"
             >
         <Button
-                android:id="@+id/SaveForAddNew"
+                android:id="@+id/UserDetailChange"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="Save"
+                android:text="Change"
                 android:layout_weight="1"
             >
 
         </Button>
         <Button
-                android:id="@+id/ReturnForAddNew"
+                android:id="@+id/UserDetailOK"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="OK"
+                android:layout_weight="1"
+            >
+
+        </Button>
+
+        <Button
+                android:id="@+id/UserDetailReturn"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Return"

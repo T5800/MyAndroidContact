@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <ImageView
-            android:id="@+id/ItemImageViewForListView"
+            android:id="@+id/ListViewImage"
             android:layout_height="50px"
             android:layout_width="50px"
             android:layout_alignParentTop="true"
@@ -16,7 +16,7 @@
             android:id="@+id/ItemLinearLayoutForListView"
             android:layout_height="50px"
             android:layout_width="fill_parent"
-            android:layout_toRightOf="@id/ItemImageViewForListView"
+            android:layout_toRightOf="@id/ListViewImage"
             android:orientation="vertical"
             android:layout_alignParentRight="true"
             >
@@ -32,7 +32,7 @@
                     android:text="name:"
             />
             <TextView
-                    android:id="@+id/nameForListView"
+                    android:id="@+id/ListViewName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
             />
@@ -49,14 +49,14 @@
                     android:text="mobile:"
                     />
             <TextView
-                    android:id="@+id/nameForListView"
+                    android:id="@+id/ListViewMobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
         </LinearLayout>
 
         <ImageView
-                android:id="@+id/mark"
+                android:id="@+id/ListViewImageMark"
                 android:layout_height="15px"
                 android:layout_width="30px"
                 android:layout_alignParentTop="true"
