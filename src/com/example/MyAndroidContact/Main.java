@@ -1,6 +1,8 @@
 package com.example.MyAndroidContact;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -20,6 +22,7 @@ public class Main extends Activity {
     EditText searchText;
     SimpleAdapter adapter;
     ArrayList list = new ArrayList(10);
+    ArrayList<Integer> deleteId;
 
     String[] bottom_menu_name = {"add", "search", "delete", "back"};
     int[] bottom_menu_src = {
@@ -43,13 +46,32 @@ public class Main extends Activity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("用户被点击");
                 Intent intent = new Intent(Main.this, UserDetail.class);
-                System.out.println("intent装配完毕");
                 intent.putExtra("id", position);
                 startActivityForResult(intent, position);
-                System.out.println("id发送出去");
                 //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (deleteId == null) {
+                    deleteId = new ArrayList<Integer>(10);
+                }
+
+                LinearLayout L = (LinearLayout)view;
+                ImageView markedview = (ImageView)L.getChildAt(2);
+
+                if (markedview.getVisibility() == View.VISIBLE) {
+                    markedview.setVisibility(View.GONE);
+                    deleteId.remove(position);
+                }
+                else {
+                    markedview.setVisibility(View.VISIBLE);
+                    deleteId.add(position);
+                }
+                return true;  //To change body of implemented methods use File | Settings | File Templates.
             }
         });
 
@@ -111,16 +133,9 @@ public class Main extends Activity {
                             if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
                                 bottomMenuGrid.setVisibility(View.GONE);
                             }
-//                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main.this);
-//                            builder1.setIcon(R.drawable.ic_launcher);
-//                            builder1.setTitle("add is clicked!");
-//                            AlertDialog dialog1 = builder1.create();
-//                            dialog1.show();
-                            System.out.println("show 完毕");
+
                             Intent intent = new Intent(Main.this, AddNew.class);
-                            System.out.println("intent整合完毕");
                             startActivityForResult(intent, 3);
-                            System.out.println("发送出去");
                             break;
                         case 1:
                             loadSearchLayout();
@@ -133,15 +148,32 @@ public class Main extends Activity {
                             }
                             break;
                         case 2:
-//                            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
-//                                bottomMenuGrid.setVisibility(View.GONE);
-//                            }
-//
-//                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main.this);
-//                            builder1.setIcon(R.drawable.ic_launcher);
-//                            builder1.setTitle("delete is clicked!");
-//                            AlertDialog dialog1 = builder1.create();
-//                            dialog1.show();
+                            if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
+                                bottomMenuGrid.setVisibility(View.GONE);
+                            }
+
+                            new AlertDialog.Builder(Main.this)
+                                    .setTitle("delete " + deleteId.size() + " data(s)?")
+                                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            boolean flag = DBHelper.deleteMarked(deleteId);
+                                            if (flag) setTitle("delete success!");
+                                            /**
+                                             * 删除成功，下面显示删除后的list..
+                                             */
+                                            list = DBHelper.getAllUsers();
+                                            adapter = new SimpleAdapter(
+                                                    Main.this, list, R.layout.listitem,
+                                                    new String[]{"imageid", "name", "mobile"},
+                                                    new int[]{R.id.ListViewImage, R.id.ListViewName, R.id.ListViewMobile}
+                                            );
+                                            lv.setAdapter(adapter);
+                                            deleteId.clear();
+                                        }
+                                    })
+                                    .setNegativeButton("no", null)
+                                    .create().show();
                             break;
                         case 3:finish();break;
                     }

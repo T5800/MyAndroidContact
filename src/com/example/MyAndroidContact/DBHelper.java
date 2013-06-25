@@ -57,4 +57,11 @@ public class DBHelper {
         arrayList.set(id, item);
         return true;
     }
+
+    public static boolean deleteMarked(ArrayList<Integer> ids) {
+        for (int id : ids) {
+            arrayList.remove(id);
+        }
+        return true;
+    }
 }
