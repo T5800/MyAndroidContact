@@ -9,16 +9,25 @@ package com.example.MyAndroidContact;
  */
 public class User {
 
-
+    private int imageid;
     private String name;
 
     private String mobile;
     private String email;
 
-    User(String name, String mobile, String email) {
+    User(int imageid, String name, String mobile, String email) {
+        this.imageid = imageid;
         this.name = name;
         this.mobile = mobile;
         this.email = email;
+    }
+
+    public int getImageid() {
+        return imageid;
+    }
+
+    public void setImageid(int imageid) {
+        this.imageid = imageid;
     }
 
     public String getEmail() {

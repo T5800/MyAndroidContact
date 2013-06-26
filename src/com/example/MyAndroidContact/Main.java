@@ -140,6 +140,9 @@ public class Main extends Activity {
                         case 1:
                             loadSearchLayout();
 
+                            /**
+                             * 下面将隐藏的搜索框显示出来...
+                             */
                             if (mainSearchLayout.getVisibility() == View.GONE) {
                                 mainSearchLayout.setVisibility(View.VISIBLE);
                             }
@@ -151,7 +154,10 @@ public class Main extends Activity {
                             if (bottomMenuGrid.getVisibility() == View.VISIBLE) {
                                 bottomMenuGrid.setVisibility(View.GONE);
                             }
-
+                            if (deleteId == null) {
+                                Toast.makeText(Main.this, "deleteId is empty", Toast.LENGTH_LONG).show();
+                                break;
+                            }
                             new AlertDialog.Builder(Main.this)
                                     .setTitle("delete " + deleteId.size() + " data(s)?")
                                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {

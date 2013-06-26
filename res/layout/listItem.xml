@@ -15,7 +15,7 @@
     <LinearLayout
             android:id="@+id/ItemLinearLayoutForListView"
             android:layout_height="50px"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_toRightOf="@id/ListViewImage"
             android:orientation="vertical"
             android:layout_alignParentRight="true"
@@ -55,16 +55,16 @@
                     />
         </LinearLayout>
 
-        <ImageView
-                android:id="@+id/ListViewImageMark"
-                android:layout_height="15px"
-                android:layout_width="30px"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:visibility="gone"
-                android:src="@drawable/ic_launcher"
-                >
-
-        </ImageView>
     </LinearLayout>
+    <ImageView
+            android:id="@+id/ListViewImageMark"
+            android:layout_height="15px"
+            android:layout_width="60px"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_launcher"
+
+            android:visibility="gone"
+            >
+    </ImageView>
 </LinearLayout>

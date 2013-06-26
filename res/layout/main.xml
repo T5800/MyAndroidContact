@@ -19,7 +19,7 @@
 
     <GridView
             android:id="@+id/main_GridView"
-            android:layout_height="30sp"
+            android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:layout_alignParentBottom="true"
             android:visibility="gone"
@@ -40,7 +40,5 @@
                 android:hint="Entry the name or phone"
         />
     </LinearLayout>
-
-
 </RelativeLayout>
 

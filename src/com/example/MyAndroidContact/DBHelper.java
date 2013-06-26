@@ -17,6 +17,7 @@ public class DBHelper {
     private static ArrayList<Map<String, String>> arrayList = new ArrayList<Map<String, String>>(10);
     public static boolean save(User user) {
         HashMap<String, String> item = new HashMap<String, String>(2);
+        item.put("imageid",Integer.toString(user.getImageid()));
         item.put("name", user.getName());
         item.put("mobile", user.getMobile());
         item.put("email", user.getEmail());
@@ -42,6 +43,7 @@ public class DBHelper {
     public static User getUser(int id) {
         Map map = arrayList.get(id);
         User user = new User(
+                Integer.valueOf((String)map.get("imageid")),
                 (String)map.get("name"),
                 (String)map.get("mobile"),
                 (String)map.get("email")
@@ -51,6 +53,7 @@ public class DBHelper {
 
     public static boolean update(int id, User user) {
         HashMap item = new HashMap(4);
+        item.put("imageid", Integer.toString(user.getImageid()));
         item.put("name", user.getName());
         item.put("mobile", user.getMobile());
         item.put("email", user.getEmail());
